@@ -1,0 +1,8 @@
+version: '3'
+services: 
+   person:
+     build: Dockerfile
+     image: person
+     container_name: person
+     ports:
+       - 8080:8088
