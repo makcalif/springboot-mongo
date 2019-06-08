@@ -12,8 +12,8 @@ import java.util.UUID;
 @SpringBootApplication
 public class MongoDemoApplication implements CommandLineRunner {
 
-	@Autowired
-	PersonRepository personRepository;
+//	@Autowired
+//	PersonRepository personRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(MongoDemoApplication.class, args);
@@ -22,10 +22,10 @@ public class MongoDemoApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 
-		Person person = new Person(UUID.randomUUID(), "mumtaz", "khan");
-		personRepository.save(person);
-
-		personRepository.findAll()
-				.forEach(System.out::println);
+//		Person person = new Person(UUID.randomUUID(), "mumtaz", "khan");
+//		personRepository.save(person);
+//
+//		personRepository.findAll()
+//				.forEach(System.out::println);
 	}
 }

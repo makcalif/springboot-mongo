@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: persons
+spec:
+  selector:
+    matchLabels:
+      app: persons
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: persons
+    spec:
+      containers:
+        - name: persons
+          image: person:1.0
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8088
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: persons-svc
+spec:
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8088
+  type: ClusterIP
+  selector:
+    app: persons
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: persons-front
+spec:
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8088
+  selector:
+    app: persons
