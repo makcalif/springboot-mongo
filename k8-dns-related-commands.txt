@@ -1,0 +1,48 @@
+  14 Set-Alias -Name k -Value kubectl.exe
+   
+  17 k exec busybox nslookup kubernetes.default 
+  20 k get all --namespace=kube-system
+  
+ k exec busybox cat /etc/resolv.conf
+	nameserver 10.96.0.10
+	search default.svc.cluster.local svc.cluster.local cluster.local KUBOTA-KNA.COM KUBOTA.COM
+	options ndots:5 
+	
+ k exec -it persons-6fc7fcf95d-7z48s /bin/sh
+
+PS C:\dev\code\learn\azure\springboot-mongo> k logs --namespace=kube-system kube-dns-86f4d74b45-4dtqk -c kubedns
+	I0629 06:36:37.847367       1 dns.go:48] version: 1.14.8
+	I0629 06:36:37.850838       1 server.go:71] Using configuration read from directory: /kube-dns-config with period 10s
+	I0629 06:36:37.851417       1 server.go:119] FLAG: --alsologtostderr="false"
+	I0629 06:36:37.851445       1 server.go:119] FLAG: --config-dir="/kube-dns-config"
+	I0629 06:36:37.851452       1 server.go:119] FLAG: --config-map=""
+	I0629 06:36:37.851454       1 server.go:119] FLAG: --config-map-namespace="kube-system"
+	I0629 06:36:37.851457       1 server.go:119] FLAG: --config-period="10s"
+	I0629 06:36:37.851460       1 server.go:119] FLAG: --dns-bind-address="0.0.0.0"
+	I0629 06:36:37.851463       1 server.go:119] FLAG: --dns-port="10053"
+	I0629 06:36:37.851502       1 server.go:119] FLAG: --domain="cluster.local."
+	I0629 06:36:37.851543       1 server.go:119] FLAG: --federations=""
+	I0629 06:36:37.851549       1 server.go:119] FLAG: --healthz-port="8081"
+	I0629 06:36:37.851552       1 server.go:119] FLAG: --initial-sync-timeout="1m0s"
+	I0629 06:36:37.851555       1 server.go:119] FLAG: --kube-master-url=""
+	I0629 06:36:37.851558       1 server.go:119] FLAG: --kubecfg-file=""
+	I0629 06:36:37.851560       1 server.go:119] FLAG: --log-backtrace-at=":0"
+	I0629 06:36:37.851591       1 server.go:119] FLAG: --log-dir=""
+	I0629 06:36:37.851624       1 server.go:119] FLAG: --log-flush-frequency="5s"
+	I0629 06:36:37.851629       1 server.go:119] FLAG: --logtostderr="true"
+	I0629 06:36:37.851631       1 server.go:119] FLAG: --nameservers=""
+	I0629 06:36:37.851633       1 server.go:119] FLAG: --stderrthreshold="2"
+	I0629 06:36:37.851636       1 server.go:119] FLAG: --v="2"
+	I0629 06:36:37.851638       1 server.go:119] FLAG: --version="false"
+	I0629 06:36:37.851662       1 server.go:119] FLAG: --vmodule=""
+	I0629 06:36:37.851804       1 server.go:201] Starting SkyDNS server (0.0.0.0:10053)
+	I0629 06:36:37.853288       1 server.go:220] Skydns metrics enabled (/metrics:10055)
+	I0629 06:36:37.853358       1 dns.go:146] Starting endpointsController
+	I0629 06:36:37.853396       1 dns.go:149] Starting serviceController
+	I0629 06:36:37.854482       1 logs.go:41] skydns: ready for queries on cluster.local. for tcp://0.0.0.0:10053 [rcache 0]
+	I0629 06:36:37.854584       1 logs.go:41] skydns: ready for queries on cluster.local. for udp://0.0.0.0:10053 [rcache 0]
+	I0629 06:36:38.353614       1 dns.go:173] Waiting for services and endpoints to be initialized from apiserver...
+	I0629 06:36:38.853680       1 dns.go:170] Initialized services and endpoints from apiserver
+	I0629 06:36:38.853696       1 server.go:135] Setting up Healthz Handler (/readiness)
+	I0629 06:36:38.853706       1 server.go:140] Setting up cache handler (/cache)
+	I0629 06:36:38.853710       1 server.go:126] Status HTTP port 8081
