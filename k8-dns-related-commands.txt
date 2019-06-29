@@ -9,6 +9,7 @@
 	options ndots:5 
 	
  k exec -it persons-6fc7fcf95d-7z48s /bin/sh
+ then in shell type: env to see all env vars set by k8s
 
 PS C:\dev\code\learn\azure\springboot-mongo> k logs --namespace=kube-system kube-dns-86f4d74b45-4dtqk -c kubedns
 	I0629 06:36:37.847367       1 dns.go:48] version: 1.14.8
