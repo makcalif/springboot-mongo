@@ -1,0 +1,25 @@
+mkhan@kubota-kna.com
+
+az aks get-credentials -n d204k8sea01 -g p002rgea01
+
+ 21 kubectl.exe get contexts
+  22 az login
+  23 az aks get-credentials
+  24 az aks get-credentials -n d204k8sea01 -g p002rgea01
+  25 az aks get-credentials -n d204k8sea01 -g p002rgea01
+  26 az logout
+  27 az login
+  28 az aks get-credentials -n d204k8sea01 -g p002rgea01
+  29 kubectl get pod
+  30 kubectl get pod
+  31 kubectl get pod
+  32 kubectl get all
+  33 az aks list
+  
+  
+  
+  az acr login --name p204acrea01
+  
+   docker tag person:1.0 p204acrea01.azurecr.io/person:1.0
+   
+   docker push p204acrea01.azurecr.io/person:1.0

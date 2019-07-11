@@ -1,0 +1,29 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: deploy-from-acr
+spec:
+  template:
+    metadata:
+      labels:
+        app: acr-auth-example
+    spec:
+      containers:
+      - name: acr-auth-example
+        image: mkacr.azurecr.io/nginx
+      imagePullSecrets:
+      - name: acr-auth
+
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: nginx-svc
+spec:
+  ports:
+  - protocol: TCP
+    port: 8088
+    targetPort: 8088	
+  type: ClusterIP
+  selector:
+    app: acr-auth-example

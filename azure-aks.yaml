@@ -6,7 +6,7 @@ spec:
   selector:
     matchLabels:
       app: persons
-  replicas: 2
+  replicas: 1
   template:
     metadata:
       labels:
@@ -17,6 +17,8 @@ spec:
           image: mkacr.azurecr.io/persons
           ports:
             - containerPort: 8088
+      imagePullSecrets:
+        - name: img-pull-secret
 ---
 kind: Service
 apiVersion: v1

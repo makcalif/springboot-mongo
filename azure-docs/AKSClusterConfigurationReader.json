@@ -1,0 +1,16 @@
+{
+"Name": "AKS Cluster Configuration Reader",
+"Id": "{{ create a unique guid }}",
+"IsCustom": true,
+"Description": "Can get AKS configuration.",
+"Actions": [
+"Microsoft.ContainerService/managedClusters/accessProfiles/listCredential/action",
+"Microsoft.ContainerService/managedClusters/listClusterUserCredential/action"
+],
+"NotActions": [ ],
+"DataActions": [ ],
+"NotDataActions": [ ],
+"AssignableScopes": [
+"/subscriptions/75511a7d-72a9-47c0-b401-5ccaef86a680"
+]
+}

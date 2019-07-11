@@ -1,0 +1,220 @@
+
+
+
+kubectl config set-context user1-context --cluster=docker-for-desktop-cluster --user=user1
+
+kubectl config use-context user1-context
+kubectl config current-context # check the current context user1-context
+
+ kubectl.exe config use-context default --cluster=docker-for-desktop-cluster
+ 
+ --cluster=docker-for-desktop-cluster
+ 
+ AKSAzureADServer : server secret
+ Saqr6?Nz6?1SK0GDPTjnjs@MVMrJyhq*\
+ q/R9Aw*ppo3]XMbL:6wav6nvQbW5+6BA
+ rWBH3Ruv4Sf@NKvoY9SL7**x]HHNItqD
+ 
+ AKSAzureADServer - application client id: b7929b4f-b3f9-433e-85af-db90b7cabfd9
+											eacbd686-ad11-4c06-bd65-8083599b1f16
+ 
+ AKSAzureADClient - application client id: 74a79665-b5b7-44bc-9ddc-c94bad3f4bd8
+											0b1581df-d6e5-4301-ab7b-765107ac67c8
+ 
+ Azure AD tenant id: ccc7e24d-c53f-4ada-9df9-5f554e3642ba
+ 75511a7d-72a9-47c0-b401-5ccaef86a680 (after upgrade)
+ ce21a30d-9469-4074-a3af-5b0d22df17d0  ( after creating new AD)  
+ 
+ az aks create \
+  --resource-group kubernetes-resource-group1 \
+  --name mkAKSCluster \
+  --generate-ssh-keys \
+  --aad-server-app-id b7929b4f-b3f9-433e-85af-db90b7cabfd9 \
+  --aad-server-app-secret Saqr6?Nz6?1SK0GDPTjnjs@MVMrJyhq* \
+  --aad-client-app-id 74a79665-b5b7-44bc-9ddc-c94bad3f4bd8 \
+  --aad-tenant-id ccc7e24d-c53f-4ada-9df9-5f554e3642ba
+  
+   az aks create   --resource-group kubernetes-resource-group1   --name mkAKSCluster   --generate-ssh-keys   --aad-server-app-id b7929b4f-b3f9-433e-85af-db90b7cabfd9   --aad-server-app-secret Saqr6?Nz6?1SK0GDPTjnjs@MVMrJyhq*  --aad-client-app-id 74a79665-b5b7-44bc-9ddc-c94bad3f4bd8   --aad-tenant-id 75511a7d-72a9-47c0-b401-5ccaef86a680
+
+   Select-AzureSubscription -SubscriptionName free-trial-extended
+	  
+	  Operation failed with status: 'Bad Request'. Details: Service principal clientID: 74a79665-b5b7-44bc-9ddc-c94bad3f4bd8 not found in Active Directory tenant 75511a7d-72a9-47c0-b401-5ccaef86a680, Please see https://aka.ms/aks-sp-help for more details.
+	  
+	  
+   The subscription '75511a7d-72a9-47c0-b401-5ccaef86a680' is disabled and therefore marked as read only. You cannot perform any write actions on this subscription until it is re-enabled.
+    
+	
+	---------------- after creating new AD 'AksAD'
+	
+	az aks create   --resource-group kubernetes-resource-group1   --name mkAKSCluster   --generate-ssh-keys   --aad-server-app-id eacbd686-ad11-4c06-bd65-8083599b1f16   --aad-server-app-secret rWBH3Ruv4Sf@NKvoY9SL7**x]HHNItqD  --aad-client-app-id 0b1581df-d6e5-4301-ab7b-765107ac67c8   --aad-tenant-id ce21a30d-9469-4074-a3af-5b0d22df17d0
+	
+	 
+	 Operation failed with status: 'Bad Request'. Details: Service principal clientID: afcf3f77-e699-4a80-84d1-5b77ea96062b not found in Active Directory tenant ce21a30d-9469-4074-a3af-5b0d22df17d0, Please see https://aka.ms/aks-sp-help for more details.
+	 
+	 PS C:\Users\mkhan> az ad sp create-for-rbac --skip-assignment
+		{
+		  "appId": "601e9156-424f-40cb-94fc-0bdde5b1070b",
+		  "displayName": "azure-cli-2019-06-24-04-05-51",
+		  "name": "http://azure-cli-2019-06-24-04-05-51",
+		  "password": "afd2f939-5b3e-4a1f-8d70-744c23886b26",
+		  "tenant": "ce21a30d-9469-4074-a3af-5b0d22df17d0"
+		}
+		
+		this shows up in AD app registrations as : azure-cli-2019-06-24-04-05-51
+		
+		 now add  --service-principal <-- appId and  
+		          --client-secret <- password
+				  
+		az aks create   --resource-group kubernetes-resource-group1   --name mkAKSClusterSingleNode   --generate-ssh-keys   --aad-server-app-id eacbd686-ad11-4c06-bd65-8083599b1f16   --aad-server-app-secret rWBH3Ruv4Sf@NKvoY9SL7**x]HHNItqD  --aad-client-app-id 0b1581df-d6e5-4301-ab7b-765107ac67c8   --aad-tenant-id ce21a30d-9469-4074-a3af-5b0d22df17d0 --service-principal 601e9156-424f-40cb-94fc-0bdde5b1070b --client-secret afd2f939-5b3e-4a1f-8d70-744c23886b26 --node-count 1
+		
+		-- now create 	
+		
+		
+		az aks get-credentials --resource-group kubernetes-resource-group1 --name mkAKSClusterSingleNode --admin
+		
+		---- create new user in AD
+		operator@makcalif.onmicrosoft.com / Learnaks1! 
+		object id: 7e516773-dde8-466b-b206-612e12712af8
+		
+		developer@makcalif.onmicrosoft.com / Haso1012
+		obje id: b66e9326-81ed-46d0-abfe-9c57cebd5db3
+		
+		created cluster role binding:
+		
+		PS C:\dev\code\learn\azure> kubectl.exe apply -f .\create-clusterRoleBinding.yaml
+		clusterrolebinding.rbac.authorization.k8s.io "makcalif-cluster-admins" created
+	 
+		https://imti.co/team-kubernetes-remote-access/
+		
+		created groups 'devops' and 'developer'
+		devops group = f78b303b-028a-4044-9e4f-bcddfcda4a3d 
+		
+		
+		PS C:\dev\code\learn\azure> kubectl.exe apply -f .\rbac-aad-group.yaml
+		clusterrolebinding.rbac.authorization.k8s.io "makcalif-cluster-admins" configured
+	 
+		
+		
+		# create the deployer ServiceAccount
+		kubectl create serviceaccount operator -n invoice
+
+		# create the developer ServiceAccount
+		kubectl create serviceaccount developer -n invoice
+		
+		kubectl get serviceaccounts -n invoice
+
+		kubectl get secrets -n invoice
+		
+		PS C:\dev\code\learn\azure> kubectl get secrets -n invoice
+		NAME                    TYPE                                  DATA      AGE
+		default-token-qmdpd     kubernetes.io/service-account-token   3         7m
+		developer-token-nzvdt   kubernetes.io/service-account-token   3         1m
+		operator-token-9g2bs    kubernetes.io/service-account-token   3         1m
+		
+		kubectl describe secret operator-token-9g2bs -n invoice
+		
+			Name:         operator-token-9g2bs
+			Namespace:    invoice
+			Labels:       <none>
+			Annotations:  kubernetes.io/service-account.name=operator
+						  kubernetes.io/service-account.uid=b3f5a336-963f-11e9-b4ce-b602c700aa53
+
+			Type:  kubernetes.io/service-account-token
+
+			Data
+			====
+			ca.crt:     1716 bytes
+			namespace:  7 bytes
+			token:      eyJhbGciOiJSUzI1NiIsImtpZCI6IiJ9.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJpbnZvaWNlIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZWNyZXQubmFtZSI6Im9wZXJhdG9yLXRva2VuLTlnMmJzIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQubmFtZSI6Im9wZXJhdG9yIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQudWlkIjoiYjNmNWEzMzYtOTYzZi0xMWU5LWI0Y2UtYjYwMmM3MDBhYTUzIiwic3ViIjoic3lzdGVtOnNlcnZpY2VhY2NvdW50Omludm9pY2U6b3BlcmF0b3IifQ.U4Ra2bOlMRHEZYHWYrq0IWMjLjW0lYjaR9ysJScyvRtH3HnjqHt4HYiF67-nE7B9ic8fa1-_7LV64mmxa8rI8Mb_tv8e4kJoG8Bn14xOjrIE2Z10QhSaBbadspTmhuiVDMykS23zYbbOcSuXi7yvniQ-sdRtsh6uaw2W1iBzk3fDciuVXw8RrXPzKf6AseaGDUWZhv3XGgFY6bjaa55fHgONgCRhYvneuPdSDn5tPwpAIO9SS1ZXeNj4M_OAOP2fAu7szwbaakEgmVqSqdCaI-e8vwTcPrLx6RM7kbI_irtHfkqmxNMVfF15KpuIEo3F0lCVpsyauyTF9DcvGe5KVJf66kPW8sJU2wat2CgxiDYeSr3a_CFmAA7TGnRPa01UQLj2907oduvpoWjCS3nynxAgWsEQycn4mm2zqBT544wri_CRstxB3jKkX_KhzJ1ibrIQYTXVTX2ehBHAkOoUV1wlETtCiFjofUdRGDjQnhoE0_vGmBYem9EZelTjRKOxsWzkBeEvyD1ZP782Oatyb1CVlwKguh1ipATUKsN3cESyp3TgJHpm-HY-n6T_cgl59Jl1FgrIw0sua1OMhfDNYEaGpIhaUro9z9gOtd_ld0ejuiQyW1S1hMg8zs6-TXI9lubznBNLyZX6Z4bhI7naNICDs1UCGtmJPKO38ngOf2k
+			
+			
+		kubectl describe secret developer-token-nzvdt -n invoice
+		
+			Name:         developer-token-nzvdt
+			Namespace:    invoice
+			Labels:       <none>
+			Annotations:  kubernetes.io/service-account.name=developer
+						  kubernetes.io/service-account.uid=bac5aab4-963f-11e9-b4ce-b602c700aa53
+
+			Type:  kubernetes.io/service-account-token
+
+			Data
+			====
+			ca.crt:     1716 bytes
+			namespace:  7 bytes
+			token:      eyJhbGciOiJSUzI1NiIsImtpZCI6IiJ9.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJpbnZvaWNlIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZWNyZXQubmFtZSI6ImRldmVsb3Blci10b2tlbi1uenZkdCIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50Lm5hbWUiOiJkZXZlbG9wZXIiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC51aWQiOiJiYWM1YWFiNC05NjNmLTExZTktYjRjZS1iNjAyYzcwMGFhNTMiLCJzdWIiOiJzeXN0ZW06c2VydmljZWFjY291bnQ6aW52b2ljZTpkZXZlbG9wZXIifQ.XtCXjeOFXc0S-LsRJVEE44HGyhSYb-QRkqi1yfUiFEEZeE2Qg01hqxy_AnKxqDHu7XFjWUX6OT9TWJ8AKPv7ieAXmpRVCQfa2d0Dj3alxxmFFXhMKsyVJ5v7KgNOTw6jpa3DP5UVpqaW6xt3jH1t0p-kygon_qEAA84xc18iDNRqLGPcHkh60tdcZawF6eXVl37Tpppo6sl5SBiRBPXtSEGULHOy22Z5rv6xIOelu6NRyvb-VUPCZY8LEjpMcsmL4SLWyUVZzTaKK3d5CInA_C8HW7yEt9gMY_K2DQA2voZhehCyrzSD8wcOj1mp3NCOqpnRmYnAQ6A6tEjjP31JhSslxRzOt0zWvWW8TOcht7E1EDF7TaRBKcGTDFQl71TRJ3_oDfrSeJFtHrZzPXvt3iZWMZNxT_RcN3CZIP2O19efmMpnFnANaC7x1lrdC8JYEmfj9IZIHzFdA1fVwQPsz5v4Vlyr8YsFt29VhTvI-D8FtxTf7Fz4QRAyNQ-p9FTU3KyZImc5biBaQ9V4EtRKMxPT0TViV1J6HrIq-iqhOzNdLybWVljeNPSG7ABUw_CI8BkQDWJ_eJYnVgXTADDqrmOQvi3ITUtpawh2EPSd88cqn-vL_LsN2e8hnInRIQ1h5pu6m7SsAz9z6hNxfoO4U-ArFFO4uigZdr_-R-J7OS8
+			
+ 
+ 
+ PS C:\dev\code\learn\azure> az aks get-credentials --resource-group kubernetes-resource-group1 --name mkAKSClusterSingleNode
+	The client 'operator@makcalif.onmicrosoft.com' with object id '7e516773-dde8-466b-b206-612e12712af8' does not have authorization to perform action 'Microsoft.ContainerService/managedClusters/listClusterUserCredential/action' over scope '/subscriptions/75511a7d-72a9-47c0-b401-5ccaef86a680/resourceGroups/kubernetes-resource-group1/providers/Microsoft.ContainerService/managedClusters/mkAKSClusterSingleNode'.get-credentials
+	
+	
+	az vm deallocate --ids $(az vm list -g MC_kubernetes-resource-group1_mkAKSClusterSingleNode_eastus --query "[].id" -o tsv)
+	
+	az vm start --ids $(az vm list -g MC_kubernetes-resource-group1_mkAKSClusterSingleNode_eastus --query "[].id" -o tsv)
+	 
+	az vm list -g MC_kubernetes-resource-group1_mkAKSClusterSingleNode_eastus --query "[].id" -o tsv
+	
+ az role definition create --role-definition AKSClusterConfigurationReader.json
+ 
+	{
+  "assignableScopes": [
+    "/subscriptions/75511a7d-72a9-47c0-b401-5ccaef86a680"
+  ],
+  "description": "Can get AKS configuration.",
+  "id": "/subscriptions/75511a7d-72a9-47c0-b401-5ccaef86a680/providers/Microsoft.Authorization/roleDefinitions/f47010a1-14fa-4a66-bb3b-1a710d856499",
+  "name": "f47010a1-14fa-4a66-bb3b-1a710d856499",
+  "permissions": [
+    {
+      "actions": [
+        "Microsoft.ContainerService/managedClusters/accessProfiles/listCredential/action",
+        "Microsoft.ContainerService/managedClusters/listClusterUserCredential/action"
+      ],
+      "dataActions": [],
+      "notActions": [],
+      "notDataActions": []
+    }
+  ],
+  "roleName": "AKS Cluster Configuration Reader",
+  "roleType": "CustomRole",
+  "type": "Microsoft.Authorization/roleDefinitions"
+}
+
+--- acr image 
+
+   az acr login --name p204acrea01
+  
+   docker tag person:1.0 p204acrea01.azurecr.io/person:1.0
+   
+   docker push p204acrea01.azurecr.io/person:1.0
+   
+   
+   az aks browse --resource-group kubernetes-resource-group1 --name mkAKSClusterSingleNode 
+   
+   
+   -------------------------- service principal to pull images by k8 --------------------
+   
+   three roles:
+   Owner: (pull, push, and assign roles to other users)
+	Contributor: (pull and push)
+		Reader: (pull only access)
+
+   az ad sp create-for-rbac   --scopes /subscriptions/75511a7d-72a9-47c0-b401-5ccaef86a680/resourceGroups/kubernetes-resource-group1/providers/Microsoft.ContainerRegistry/registries/mkacr  --role Reader   --name http://podimagereader
+   
+   {
+	  "appId": "978b1d77-90a4-4dc4-8cd8-307616dc1bf3",
+	  "displayName": "azure-cli-2019-07-03-13-05-34",
+	  "name": "http://podimagereader",
+	  "password": "5d7aea5c-5c99-4974-b42b-f81c51a8559a",
+	  "tenant": "ce21a30d-9469-4074-a3af-5b0d22df17d0"
+	}
+	
+	in UI Shows up as "azure-cli-2019-07-03-13-05-34"
+	
+	Once the service principal has been created, copy the client_id (named appId in the response) and the client_secret (named password in the response). You’ll need those in a few seconds.
+	
+	kubectl create secret docker-registry img-pull-secret  --docker-server mkacr.azurecr.io    --docker-email makcalif@yahoo.com   --docker-username=978b1d77-90a4-4dc4-8cd8-307616dc1bf3 --docker-password 5d7aea5c-5c99-4974-b42b-f81c51a8559a
+	
+	secret "img-pull-secret" created
+	
