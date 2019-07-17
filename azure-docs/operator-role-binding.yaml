@@ -1,0 +1,31 @@
+# ran this as admin 
+# then logged in as user operator@makcalif.onmicrosoft.com / Learnaks1!
+# then got credentials: az aks get-credentials --resource-group kubernetes-resource-group1 --name mkAKSClusterSingleNode 
+# could get pods via kubectl
+# proved that can't get pods with user developer@makcalif.onmicrosoft.com
+# as cluster role binding is missing for that user
+# need to create similar cluster role binding for developer in future
+
+
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRole
+metadata: 
+  name: operator
+rules:
+- apiGroups: [""]
+  resources: ["deployments","configmaps","pods","secrets","ingresses"]
+  verbs: ["create","get","delete","list","update","edit","watch","exec","patch"]
+--- 
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+ name: cluster-operators
+roleRef:
+ apiGroup: rbac.authorization.k8s.io
+ kind: ClusterRole
+ name: operator
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: "f78b303b-028a-4044-9e4f-bcddfcda4a3d"

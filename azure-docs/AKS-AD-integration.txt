@@ -76,7 +76,7 @@ kubectl config current-context # check the current context user1-context
 		operator@makcalif.onmicrosoft.com / Learnaks1! 
 		object id: 7e516773-dde8-466b-b206-612e12712af8
 		
-		developer@makcalif.onmicrosoft.com / Haso1012
+		developer@makcalif.onmicrosoft.com / Learnaks1!
 		obje id: b66e9326-81ed-46d0-abfe-9c57cebd5db3
 		
 		created cluster role binding:
@@ -217,4 +217,8 @@ kubectl config current-context # check the current context user1-context
 	kubectl create secret docker-registry img-pull-secret  --docker-server mkacr.azurecr.io    --docker-email makcalif@yahoo.com   --docker-username=978b1d77-90a4-4dc4-8cd8-307616dc1bf3 --docker-password 5d7aea5c-5c99-4974-b42b-f81c51a8559a
 	
 	secret "img-pull-secret" created
+	
+	
+	---------------------------
+	kubectl config set-cluster dev --server=https://1.1.1.1:6443 --insecure-skip-tls-verify=true
 	
