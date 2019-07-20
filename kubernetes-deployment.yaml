@@ -14,7 +14,34 @@ spec:
     spec:
       containers:
         - name: person
-          image: person:latest
-          imagePullPolicy: Never
+          image: localhost:32000/person:mongo-save
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8088
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: persons-svc
+spec:
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8088
+  type: ClusterIP
+  selector:
+    app: person
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: persons-front
+spec:
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8088
+  selector:
+    app: person
