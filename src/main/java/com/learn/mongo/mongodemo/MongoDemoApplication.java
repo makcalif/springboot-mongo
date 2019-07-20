@@ -1,8 +1,6 @@
 package com.learn.mongo.mongodemo;
 
 import com.learn.mongo.mongodemo.entities.Person;
-import com.learn.mongo.mongodemo.repository.PersonRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
