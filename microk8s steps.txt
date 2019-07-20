@@ -1,0 +1,32 @@
+
+
+docker save person:1.0 > person.tar
+microk8s.ctr -n k8s.io image import person.tar
+
+-- for local
+microk8s.kubectl config set-context microk8s (not sure if this works)
+alternatively try:
+export KUBECONFIG=/var/snap/microk8s/671/credentials/client.config
+
+-- for azure aks
+export KUBECONFIG=/home/mumtaz/.kube/config
+
+-- for azure spot instances
+export /home/mumtaz/code/azure/spotinst/output/kubeconfig.eastus.json
+
+-- deploying images from local repo
+    # if api server is not running load balancer ip keeps waiting
+     try microk8s.start and
+     icrok8s.enable dns (in the very beginning)
+    from this url: https://microk8s.io/docs/working
+    microk8s.enable registry
+    docker build -t localhost:32000/person:mongo-save .
+    docker tag person:mongo-save localhost:32000/person:mongo-save
+    docker push localhost:32000/person:mongo-save
+
+    load balancer IP never came back:
+    service/persons-front          LoadBalancer   10.152.183.137   <pending>     80:30062/TCP   24m
+
+    but could access the app via: 10.152.183.137
+    but could post via curl using this command:
+    curl -d @postPerson.json -H "Content-Type: application/json"  -X POST http://10.152.183.137/persons
