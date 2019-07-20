@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.UUID;
 
 
-public interface PersonRepository { //extends MongoRepository <Person, UUID>{
+public interface PersonRepository  extends MongoRepository <Person, UUID>{
 
 
 }
