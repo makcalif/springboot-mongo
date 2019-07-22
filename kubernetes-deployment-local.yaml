@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: person
-          image: mkacr.azurecr.io/person:mongo-save
+          image: localhost:32000/person:mongo-save
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8088
