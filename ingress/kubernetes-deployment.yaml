@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: person
+  namespace: ingress-basic
+spec:
+  selector:
+    matchLabels:
+      app: person
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: person
+    spec:
+      containers:
+        - name: person
+          image: mkacr.azurecr.io/person:mongo-save
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8088
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: persons-svc
+  namespace: ingress-basic
+spec:
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8088
+  type: ClusterIP
+  selector:
+    app: person
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: persons-front
+  namespace: ingress-basic
+spec:
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8088
+  selector:
+    app: person

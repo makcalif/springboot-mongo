@@ -1,0 +1,37 @@
+
+
+helm init 
+
+above was using kubeconfig from ~/.kube/config
+so had to backup the config there and copy the sparkarabic config in there
+
+helm install stable/nginx-ingress  --namespace ingress-basic  --set controller.replicaCount=2   --set controller.nodeSelector."beta.kubernetes.io/os"=linux   --set defaultBackend.nodeSelector."beta.kubernetes.io/os"=linux
+
+Error: no available release name found
+
+to fix above error ran these:
+
+kubectl create serviceaccount --namespace kube-system tiller
+kubectl create clusterrolebinding tiller-cluster-rule --clusterrole=cluster-admin --serviceaccount=kube-system:tiller
+-- (modified below) kubectl patch deploy --namespace kube-system tiller-deploy -p '{"spec":{"template":{"spec":{"serviceAccount":"tiller"}}}}'
+
+kubectl patch deploy --namespace kube-system tiller-deploy  -p '
+spec:
+  template:
+    spec:
+      serviceAccount: tiller
+'
+	   
+dropped the node selector part as we have only 1 node:
+helm install stable/nginx-ingress  --namespace ingress-basic  --set controller.replicaCount=2
+
+kubectl get service -l app=nginx-ingress --namespace ingress-basic
+
+helm repo add azure-samples https://azure-samples.github.io/helm-charts/
+
+helm install azure-samples/aks-helloworld --namespace ingress-basic
+
+helm install azure-samples/aks-helloworld \
+    --namespace ingress-basic \
+    --set title="AKS Ingress Demo" \
+    --set serviceName="ingress-demo"
