@@ -1,0 +1,17 @@
+ k get pod my-release-mongodb-5789457896-szhv8  -o yaml --export > rev-helm.yaml
+
+helm install --name my-release   --set mongodbRootPassword=example,mongodbUsername=oauth-user,mongodbPassword=password,mongodbDatabase=oauth-db  stable/mongodb
+
+helm delete my-release
+
+helm del --purge my-release;
+
+for i in 0 1 2; do kubectl get pod zk-$i --template {{.spec.n odeName}}; echo ""; done
+
+kubectl run -i --tty --image busybox:1.28 dns-test -restart=Never --rm
+nslookup web-0.nginx
+Server: 10.0.0.10 Address 1: 10.0.0.10 kube-dns.kube-system.svc.cluster.local
+
+kubectl run curl --image=radial/busyboxplus:curl -i --tty
+
+ k delete all -l run=curl
