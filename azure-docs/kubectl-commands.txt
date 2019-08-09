@@ -15,3 +15,5 @@ Server: 10.0.0.10 Address 1: 10.0.0.10 kube-dns.kube-system.svc.cluster.local
 kubectl run curl --image=radial/busyboxplus:curl -i --tty
 
  k delete all -l run=curl
+
+ kubectl attach curl-775f9567b5-g9kph -c curl -i -t
