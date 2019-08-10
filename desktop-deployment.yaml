@@ -1,3 +1,4 @@
+# this is the one used with docker desktop for feign discover in registry-services
 apiVersion: apps/v1
 kind: Deployment
 metadata:
