@@ -20,6 +20,22 @@ spec:
       containers:
         - name: mongo
           image: mongo
+          args: ["--auth"]
+          env:
+            - name: restart
+              value: always
+            - name: MONGO_INITDB_ROOT_USERNAME
+              value: root
+            - name: MONGO_INITDB_ROOT_PASSWORD
+              value: example
+            - name: MONGO_INITDB_DATABASE
+              value: oauth-db
+            - name: MONGODB_DATABASE
+              value: oauth-db
+            - name: MONGODB_USER
+              value: oauth-user
+            - name: MONGODB_PASS
+              value: password
           ports:
             - containerPort: 27017
           volumeMounts:
