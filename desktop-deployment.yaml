@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: persons
-          image: person:1.0
+          image: person:mongo
           imagePullPolicy: Never
           ports:
             - containerPort: 8088

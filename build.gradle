@@ -17,6 +17,10 @@ dependencies {
 	//implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	compile("org.springframework.boot:spring-boot-starter-data-mongodb")
+	// for discover client so that other serices can call it via feign client
+	compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-kubernetes-ribbon', version: '0.3.0.RELEASE'
+
+	compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-kubernetes', version: '0.2.0.RELEASE'
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }

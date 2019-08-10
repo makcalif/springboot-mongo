@@ -4,10 +4,13 @@ import com.learn.mongo.mongodemo.entities.Person;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 import java.util.UUID;
 
 @SpringBootApplication
+@EnableDiscoveryClient
+
 public class MongoDemoApplication implements CommandLineRunner {
 
 //	@Autowired
