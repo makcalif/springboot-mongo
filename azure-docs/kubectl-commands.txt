@@ -17,3 +17,8 @@ kubectl run curl --image=radial/busyboxplus:curl -i --tty
  k delete all -l run=curl
 
  kubectl attach curl-775f9567b5-g9kph -c curl -i -t
+
+ To deploy a new version use kubectl set image deployment/spring-boot-deployment spring-boot-app=your-new-image or simply edit the configuration with kubectl edit deployment spring-boot-deployment . With the second command you can update the image and the number of pods at the same time. If you want just to scale the app run kubectl scale deployment spring-boot-deployment --replicas=10 or create an autoscaling configuration.
+
+ -- run simple bash commands for debugging
+ k run -it --rm --restart=Never alpine --image=alpine sh
