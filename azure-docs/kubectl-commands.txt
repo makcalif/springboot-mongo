@@ -41,3 +41,13 @@ curl -I  --user account-service:1234  -H "Content-Type: application/x-www-form-u
 
 -- win powershell
 curl -v -X  POST -H 'Content-Type: application/x-www-form-urlencoded'  --user account-service:1234 -d 'grant_type=client-credentials&username=randomuser&password=1234' http://127.0.0.1/uaa/oauth/token
+
+--- service end point
+ k get ep auth-service
+NAME           ENDPOINTS        AGE
+auth-service   10.1.1.67:8011   53m
+
+-------------- curl a nodeport ----------------
+nodeport-for-persons     NodePort       10.102.96.25     <none>        44444:30492/TCP   69d
+k exec -it curl-775f9567b5-pnjhf -- curl  http://10.102.96.25:44444/persons
+[]
