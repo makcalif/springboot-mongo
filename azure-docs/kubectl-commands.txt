@@ -37,5 +37,7 @@ kubectl run curl --image=radial/busyboxplus:curl -i --tty
 -- get auth token
 curl -I  --user account-service:1234  -H "Content-Type: application/x-www-form-urlencoded" -d "grant_type=client-credentials&username=randomuser&password=1234" -X POST http://auth-service/uaa/oauth/token
 
+ k exec -it curl-775f9567b5-pnjhf -- curl  --user "account-service:1234"  -H "Content-Type: application/x-www-form-urlencoded" -d "grant_type=client_credentials&username=randomuser&password=1234" -X POST  http://10.96.101.34:8011/uaa/oauth/token
+
 -- win powershell
 curl -v -X  POST -H 'Content-Type: application/x-www-form-urlencoded'  --user account-service:1234 -d 'grant_type=client-credentials&username=randomuser&password=1234' http://127.0.0.1/uaa/oauth/token
