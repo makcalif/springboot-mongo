@@ -1,3 +1,10 @@
+mongo login as admin
+
+ k exec -it  mongo-5f5db6859c-ddbdn  -- /bin/bash
+
+cd /usr/bin
+mongo login -u root -p example
+================================
  k get pod my-release-mongodb-5789457896-szhv8  -o yaml --export > rev-helm.yaml
 
 helm install --name my-release   --set mongodbRootPassword=example,mongodbUsername=oauth-user,mongodbPassword=password,mongodbDatabase=oauth-db  stable/mongodb
@@ -22,3 +29,13 @@ kubectl run curl --image=radial/busyboxplus:curl -i --tty
 
  -- run simple bash commands for debugging
  k run -it --rm --restart=Never alpine --image=alpine sh
+
+ k run -it --rm --image=mikesplain/telnet sh
+
+ kubectl port-forward <mongo pod name>  27017  (then you can do a telnet to verify if mongo is up or not)
+
+-- get auth token
+curl -I  --user account-service:1234  -H "Content-Type: application/x-www-form-urlencoded" -d "grant_type=client-credentials&username=randomuser&password=1234" -X POST http://auth-service/uaa/oauth/token
+
+-- win powershell
+curl -v -X  POST -H 'Content-Type: application/x-www-form-urlencoded'  --user account-service:1234 -d 'grant_type=client-credentials&username=randomuser&password=1234' http://127.0.0.1/uaa/oauth/token
