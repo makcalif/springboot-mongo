@@ -1,0 +1,37 @@
+based on:
+https://medium.com/google-cloud/helm-on-gke-cluster-quick-hands-on-guide-ecffad94b0
+
+Note: we are installing tiller pod in kube-system namespace!
+
+create a file 'rbac-tiller.yaml' like below :
+
+
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: tiller
+  namespace: kube-system 
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1beta1
+metadata:
+  name: tiller-clusterrolebinding
+subjects:
+- kind: ServiceAccount
+  name: tiller
+  namespace: kube-system 
+roleRef:
+  kind: ClusterRole
+  name: cluster-admin
+  apiGroup: ""
+
+
+  helm reset --force
+
+  -- note namespace is imp here
+  helm init --service-account tiller --upgrade --tiller-namespace kube-system
+
+  k apply -f rbac-tiller.yaml
+
+  -- no need to mention namespace here:
+  helm install --name my-release    --set mongodbRootPassword=example,mongodbUsername=oauth-user,mongodbPassword=password,mongodbDatabase=oauth-db  stable/mongodb
