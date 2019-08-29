@@ -35,3 +35,7 @@ roleRef:
 
   -- no need to mention namespace here:
   helm install --name my-release    --set mongodbRootPassword=example,mongodbUsername=oauth-user,mongodbPassword=password,mongodbDatabase=oauth-db  stable/mongodb
+
+  -- test mongo from within inside container
+  first shell into mongo db pod
+  mongo mongodb://root:example@localhost
