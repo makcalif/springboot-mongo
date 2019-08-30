@@ -1,0 +1,13 @@
+
+
+powershell:
+check value:
+Get-Item Env:KUBECONFIG
+
+Set value:
+$Env:KUBECONFIG = C:\dev\code\learn\azure\admin.kube.config
+
+
+c/dev/code/learn/azure/admin.kube.config
+
+set KUBECONFIG=C:\dev\code\learn\azure\admin.kube.config
