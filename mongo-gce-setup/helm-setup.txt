@@ -39,7 +39,3 @@ roleRef:
   -- test mongo from within inside container
   first shell into mongo db pod
   mongo mongodb://root:example@localhost
-
-  -- test mongo service connectivity
-  kubectl run -it --rm debug --image=busybox --restart=Never -- sh
-  then : telnet <mongo service> port
