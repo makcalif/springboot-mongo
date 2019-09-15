@@ -51,3 +51,6 @@ auth-service   10.1.1.67:8011   53m
 nodeport-for-persons     NodePort       10.102.96.25     <none>        44444:30492/TCP   69d
 k exec -it curl-775f9567b5-pnjhf -- curl  http://10.102.96.25:44444/persons
 []
+
+---------------------- check if dns is running
+kubectl get services kube-dns --namespace=kube-system
