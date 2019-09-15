@@ -54,3 +54,12 @@ k exec -it curl-775f9567b5-pnjhf -- curl  http://10.102.96.25:44444/persons
 
 ---------------------- check if dns is running
 kubectl get services kube-dns --namespace=kube-system
+
+--------------------------------------
+k config current-context
+gke_sparkarabic-251004_us-central1-a_sparkarabic
+
+kubectl config set-context mongo --namespace=mongo     --cluster=gke_sparkarabic-251004_us-central1-a_sparkarabic --user=gke_sparkarabic-251004_us-central1-a_sparkarabic
+kubectl config set-context default --namespace=default --cluster=gke_sparkarabic-251004_us-central1-a_sparkarabic --user=gke_sparkarabic-251004_us-central1-a_sparkarabic
+
+k config use-context mongo (you can switch to default also)
